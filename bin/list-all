@@ -1,2 +1,2 @@
 #!/bin/sh 
-curl -s http://grails.org/download.html | grep -e "<option>*.*</option>" | sed -e 's/ //g' -e 's/<[^>]\+>//g' | sort -t. -n | paste -s -d" " -
+curl -s http://grails.org/download.html | grep -e "<h2>Download.*</h2>" -e "<option>*.*</option>" | sed -e "s#^.*Grails ##" -e 's/ //g' -e 's/<[^>]\+>//g' | sort -t. -n | paste -s -d" " -
