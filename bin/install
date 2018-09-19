@@ -9,5 +9,5 @@ else
 	curl -OJL https://github.com/grails/grails-core/releases/download/v${ASDF_INSTALL_VERSION}/grails-${ASDF_INSTALL_VERSION}.zip
 	unzip grails-${ASDF_INSTALL_VERSION}.zip
 	rm grails-${ASDF_INSTALL_VERSION}.zip
-	mv ${ASDF_INSTALL_VERSION}/* .
+	mv grails-${ASDF_INSTALL_VERSION}/* .
 fi
