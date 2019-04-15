@@ -1,6 +1,6 @@
 language: java
 jdk:
-  - oraclejdk8
+  - openjdk11
 script: asdf plugin-test grails https://github.com/weibemoura/asdf-grails.git
 before_script:
   - git clone https://github.com/asdf-vm/asdf.git
