@@ -1,2 +1,4 @@
 #!/bin/sh 
-curl -s http://grails.org/download.html | grep -oE "<option>(.*?)</option>" | grep -oE "[0-9\.]+" | sort -t. -n | paste -s -d" " -
+
+#curl -s http://grails.org/download.html | grep -oE "<option>(.*?)</option>" | grep -oE "[0-9\.]+" | sort -t. -n | paste -s -d" " -
+curl -s http://grails.org/download.html | grep -oE "<option>(.*?)</option>" | grep -oE "[0-9\.]+" | sort --version-sort | xargs echo
