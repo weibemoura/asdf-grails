@@ -1,6 +1,6 @@
 # asdf-grails
 
-[![Build Status](https://travis-ci.org/weibemoura/asdf-grails.svg?branch=master)](https://travis-ci.org/weibemoura/asdf-grails)
+[![Build Status](https://github.com/weibemoura/asdf-grails/actions/workflows/asdf.yml/badge.svg)](https://github.com/weibemoura/asdf-grails/actions)
 
 [Grails](https://grails.org/) plugin for [asdf](https://github.com/asdf-vm/asdf) version manager
 
