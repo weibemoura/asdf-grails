@@ -1,3 +1,7 @@
 #!/bin/sh 
 
-curl -s https://grails.org/download.html | grep -oE "<option>(.*?)</option>" | grep -oE "[0-9\.]+" | sort --version-sort | xargs echo
+curl -sL https://grails.apache.org/download.html \
+  | grep -oE "(grails/core/[0-9][^/]*/distribution|v[0-9][^']+\.zip)" \
+  | grep -oE "[0-9]+(\.[0-9]+)+" \
+  | sort --version-sort -u \
+  | xargs echo
