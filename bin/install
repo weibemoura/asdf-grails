@@ -5,8 +5,21 @@ then
 else
 	mkdir -p "$ASDF_INSTALL_PATH"
 	cd "$ASDF_INSTALL_PATH" || exit 1
-	curl -OJL https://github.com/grails/grails-core/releases/download/v${ASDF_INSTALL_VERSION}/grails-${ASDF_INSTALL_VERSION}.zip
-	unzip grails-${ASDF_INSTALL_VERSION}.zip
-	rm grails-${ASDF_INSTALL_VERSION}.zip
-	mv grails-${ASDF_INSTALL_VERSION}/* .
+	MAJOR_VERSION=$(echo "$ASDF_INSTALL_VERSION" | cut -d. -f1)
+	if [ "$MAJOR_VERSION" -ge 6 ]; then
+		ZIP_NAME="apache-grails-${ASDF_INSTALL_VERSION}-bin.zip"
+		DIR_NAME="apache-grails-${ASDF_INSTALL_VERSION}"
+		DOWNLOAD_URL="https://www.apache.org/dyn/closer.lua/grails/core/${ASDF_INSTALL_VERSION}/distribution/${ZIP_NAME}?action=download"
+	else
+		ZIP_NAME="grails-${ASDF_INSTALL_VERSION}-bin.zip"
+		DIR_NAME="grails-${ASDF_INSTALL_VERSION}"
+		DOWNLOAD_URL=https://github.com/apache/grails-core/releases/download/v${ASDF_INSTALL_VERSION}/grails-${ASDF_INSTALL_VERSION}.zip
+		
+	fi
+	curl -fL "$DOWNLOAD_URL" -o "$ZIP_NAME" || exit 1
+	unzip "$ZIP_NAME"
+	rm "$ZIP_NAME"
+	mv "${DIR_NAME}/"* .
 fi
+
+
