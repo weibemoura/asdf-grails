@@ -29,9 +29,9 @@ jobs:
         distribution: 'temurin'
     - name: Plugin test
       run: |
-        curl -o asdf.tar.gz https://github.com/asdf-vm/asdf/releases/download/v0.19.0/asdf-v0.19.0-linux-amd64.tar.gz
+        curl -fsL -o asdf.tar.gz https://github.com/asdf-vm/asdf/releases/download/v0.19.0/asdf-v0.19.0-linux-amd64.tar.gz
         tar -vzxf asdf.tar.gz
-        asdf plugin add grails https://github.com/weibemoura/asdf-grails
+        ./asdf plugin add grails
   
   test_macos:
     runs-on: macos-latest
@@ -45,6 +45,6 @@ jobs:
         distribution: 'temurin'
     - name: Plugin test
       run: |
-        git clone https://github.com/asdf-vm/asdf.git
-        . asdf/asdf.sh
-        asdf plugin-test groovy https://github.com/weibemoura/asdf-grails.git
+        curl -fsL -o asdf.tar.gz https://github.com/asdf-vm/asdf/releases/download/v0.19.0/asdf-v0.19.0-darwin-amd64.tar.gz
+        tar -vzxf asdf.tar.gz
+        ./asdf plugin add grails
