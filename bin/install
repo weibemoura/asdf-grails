@@ -1,12 +1,46 @@
 #!/bin/sh
+
 if [ "$ASDF_INSTALL_TYPE" = "ref" ]
 then
-	git clone "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"
+    git clone "$ASDF_INSTALL_VERSION" "$ASDF_INSTALL_PATH"
 else
-	mkdir -p "$ASDF_INSTALL_PATH"
-	cd "$ASDF_INSTALL_PATH" || exit 1
-	curl -OJL https://github.com/grails/grails-core/releases/download/v${ASDF_INSTALL_VERSION}/grails-${ASDF_INSTALL_VERSION}.zip
-	unzip grails-${ASDF_INSTALL_VERSION}.zip
-	rm grails-${ASDF_INSTALL_VERSION}.zip
-	mv grails-${ASDF_INSTALL_VERSION}/* .
+    mkdir -p "$ASDF_INSTALL_PATH"
+    cd "$ASDF_INSTALL_PATH" || exit 1
+
+    OUTPUT_FILE="grails-bin.zip"
+
+    NAME1="apache-grails-$ASDF_INSTALL_VERSION-bin"
+    URL1="https://www.apache.org/dyn/closer.lua/grails/core/$ASDF_INSTALL_VERSION/distribution/$NAME1.zip?action=download"
+
+    NAME2="grails-cli-$ASDF_INSTALL_VERSION"
+    URL2="https://github.com/apache/grails-forge/releases/download/v$ASDF_INSTALL_VERSION/$NAME2.zip"
+
+    NAME3="grails-$ASDF_INSTALL_VERSION"
+    URL3="https://github.com/apache/grails-core/releases/download/v$ASDF_INSTALL_VERSION/$NAME3.zip"
+
+    download_success=false
+    for URL in "$URL1" "$URL2" "$URL3"; do
+        echo "Trying to download from: $URL"
+        if curl -fsL -o "$OUTPUT_FILE" "$URL"; then
+            download_success=true
+            break
+        fi
+    done
+
+    if [ "$download_success" = false ]; then
+        echo "Error: failed to download from all URLs"
+        exit 1
+    fi
+
+    unzip -q "$OUTPUT_FILE"
+    rm -rf "$OUTPUT_FILE"
+
+    for DIR in "$NAME1" "$NAME2" "$NAME3"; do
+        if [ -d "$DIR" ]; then
+            echo "Found extracted directory: $DIR"
+            mv "$DIR"/* .
+            rmdir "$DIR"
+            break
+        fi
+    done
 fi
